@@ -1,0 +1,12 @@
+#include<stdio.h>
+main()
+{
+	int a, b;
+	printf("Enter two space-separated numbers: ");
+	scanf("%d %d", &a, &b);
+	a += b;
+	b = a-b;
+	a -= b;
+	printf("Swapped numbers: %d %d", a, b);
+	return 0;
+}
