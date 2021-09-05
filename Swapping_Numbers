@@ -1,12 +1,18 @@
 #include<stdio.h>
-main()
+int main()
 {
-	int a, b;
+	//initializing two numbers
+	int a = 0, b = 0;
 	printf("Enter two space-separated numbers: ");
+	//taking input from the user
 	scanf("%d %d", &a, &b);
+	//assigning the value of a+b to a
 	a += b;
+	//a-b is equivalent to (a+b)-b which is equal to a hence b now has the value of a
 	b = a-b;
+	//a-b is equivalent to (a+b)-a which is equal to b hence a now has the value of b
 	a -= b;
+	//printing the swapped numbers
 	printf("Swapped numbers: %d %d", a, b);
 	return 0;
 }
