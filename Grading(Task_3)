@@ -1,0 +1,32 @@
+#include<stdio.h>
+int main()
+{
+	//initializing the variable
+	int marks = 0;
+	//displaying message on the screen to prompt the user to input marks
+	printf("Enter marks: ");
+	//taking input from user
+	scanf("%d", &marks);
+	//starting of the if-else-if ladder
+	if(marks>84) //can also be written as marks>=85
+	{
+		printf("Grade A");
+	}
+	else if(marks>69) //can also be written as marks>=70 and so on for the following statements
+	{
+		printf("Grade B");
+	}
+	else if(marks>54)
+	{
+		printf("Grade C");
+	}
+	else if(marks>39)
+	{
+		printf("Grade D");
+	}
+	else //for marks less than 40
+	{
+		printf("Grade F");
+	}
+	return 0;
+}
