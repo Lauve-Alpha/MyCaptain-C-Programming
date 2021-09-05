@@ -1,0 +1,32 @@
+#include<stdio.h>
+int main()
+{
+	//prompting user for input
+	printf("Enter any number between 1-5 for a surprise food: ");
+	//initializing variable to store input
+	int choice = 0;
+	//getting input from user
+	scanf("%d", &choice);
+	//switch cases for surprise food
+	switch(choice)
+	{
+		case 1:
+			printf("Food item:- Pasta\nPrice:- Rs189");
+			break;
+		case 2:
+			printf("Food item:- Pizza\nPrice:- Rs200");
+			break;
+		case 3:
+			printf("Food item:- Burger\nPrice:- Rs155");
+			break;
+		case 4:
+			printf("Food item:- French Fries\nPrice:- Rs111");
+			break;
+		case 5:
+			printf("Food item:- Sandwich\nPrice:- Rs120");
+			break;
+		default:
+			printf("Invalid choice :(");
+	}
+	return 0;
+}
