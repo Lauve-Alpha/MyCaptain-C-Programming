@@ -1,0 +1,26 @@
+#include<stdio.h>
+#include<math.h>
+
+//function declaration
+int dig_sum (int n);
+
+int main()
+{
+	int n;
+	printf("Enter number: ");
+	scanf("%d", &n);
+	//calling function in the prinf function
+	printf("Sum of digits of %d is %d.", n, dig_sum(n));
+	return 0;
+}
+
+//function definition
+int dig_sum (int n)
+{
+	int sum = 0;
+	if (n == 0)
+	{
+		return n;
+	}
+	return ( (n%10) + dig_sum(n/10) );
+}
