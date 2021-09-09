@@ -1,0 +1,39 @@
+#include<stdio.h>
+
+int lcm(int n, int m);
+
+int main()
+{
+	int n, m, result;
+	printf("Enter smaller number: ");
+	scanf("%d", &n);
+	printf("Enter larger number: ");
+	scanf("%d", &m);
+	if (n == m)
+	{
+		result = m;
+	}
+	//the bigger number is of significance to the lcm function
+	else if (n < m)
+	{
+		result = lcm(n, m);
+	}
+	else
+	{
+		result = lcm(m, n);
+	}
+	printf("LCM of %d and %d is %d.", n, m, result);
+	return 0;
+}
+
+int lcm(int n, int m)
+{
+	static int i;
+	//the LCM of the two numbers surely will be a multiple of the bigger number
+	i += m;
+	if (i%n == 0)
+	{
+		return i;
+	}
+	return lcm(n, m);
+}
