@@ -1,0 +1,39 @@
+#include<stdio.h>
+int main()
+{
+	int i, j, sum = 0, arr[3][3];
+	int *ptr = &arr;
+	//Reading and storing array element values
+	printf("Enter array elements: \n");
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			printf("element [%d][%d]: ", i, j);
+			scanf("%d", ((ptr + i) + j));
+		}
+	}
+	//Printing the resulting array
+	printf("The entered array is:\n");
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			printf("%d\t", *(ptr + i) + j);
+		}
+		printf("\n");
+	}
+	//Calculating the sum of diagonal elements
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			if (i == j)
+			{
+				sum += *(ptr + i) + j;
+			}
+		}
+	}
+	printf("\nSum of diagonal elements is %d.", sum);
+	return 0;
+}
