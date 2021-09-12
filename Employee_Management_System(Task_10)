@@ -1,0 +1,72 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+
+struct employee
+{
+	int empno;
+	char name[50];
+	int age;
+	long int pno;
+	char deptname[50];
+	int salary;
+	struct employee *next;
+};
+
+struct employee *newemp, *ptr;
+struct employee *head = NULL;
+
+void insert();
+void display();
+
+int main()
+{
+	int i;
+	printf("Enter details of 20 employees\n");
+	for (i = 0; i < 20; i++)
+	{
+		insert();
+	}
+	display();
+	getch();
+	return 0;
+}
+
+void insert()
+{
+	newemp = (struct employee *)malloc(sizeof(struct employee));
+	printf("Enter employee no.: ");
+	scanf("%d", &newemp->empno);
+	printf("Enter name: ");
+	scanf("%s", &newemp->name);
+	printf("Enter age: ");
+	scanf("%d", &newemp->age);
+	printf("Enter phone no.: ");
+	scanf("%d", &newemp->pno);
+	printf("Enter department name: ");
+	scanf("%s", &newemp->deptname);
+	printf("Enter salary: ");
+	scanf("%d", &newemp->salary);
+	if (head == NULL)
+	{
+		head = newemp;
+		newemp->next = NULL;
+	}
+	else
+	{
+		ptr = head;
+		head = newemp;
+		newemp->next = ptr;
+	}
+}
+
+void display()
+{
+	printf("Employee No.\tName\tAge\tPhone No.\tDepartment\tSalary\n");
+	ptr = head;
+	while (ptr != NULL)
+	{
+		printf("%d\t\t%s\t%d\t%d\t%s\t\t%d", newemp->empno, newemp->name, newemp->age, newemp->pno, newemp->deptname, newemp->salary);
+		ptr = ptr->next;	
+	}
+}
