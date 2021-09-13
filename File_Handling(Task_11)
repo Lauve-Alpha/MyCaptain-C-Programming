@@ -1,0 +1,44 @@
+#include<stdio.h>
+
+int main()
+{
+	//Declaring file pointer
+	FILE *fp;
+	char c, s[15];
+	int i;
+	//Opening pre-existing file in read mode
+	fp = fopen("C:\\Users\\Muskan Singh\\OneDrive\\Desktop\\file.txt","r");
+	printf("Original content of the file: ");
+	//Reading and printing content of the file
+	//A for loop is used as the contents and thir size, from the original file, are known
+	for (i = 0; i <= 15; i++)
+	{
+		s[i] = getc(fp);
+		printf("%c", s[i]);
+	}
+	printf("\nReversed content of the file: ");
+	//Printing the content of the file in reverse order
+	for (i = 15; i >= 0; i--)
+	{
+		printf("%c", s[i]);
+	}
+	fclose (fp);
+	//Opening a new file to copy contents of original file to
+	fp = fopen ("C:\\Users\\Muskan Singh\\OneDrive\\Desktop\\copyfile.txt", "w");
+	//Copying the content of the original file to the copy
+	for (i = 0; i <= 15; i++)
+	{
+		putc(s[i], fp);
+	}
+	fclose(fp);
+	//Opening file again in read mode to make sure content is copied successfully 
+	fp = fopen ("C:\\Users\\Muskan Singh\\OneDrive\\Desktop\\copyfile.txt", "r");
+	printf("\nContent of the copy file: ");
+	for (i = 0; i <= 15; i++)
+	{
+		c = getc(fp);
+		printf("%c", c);
+	}
+	fclose(fp);
+	return 0;
+}
