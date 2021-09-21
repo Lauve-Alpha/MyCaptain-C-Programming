@@ -1,0 +1,432 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+
+//account structure creation
+struct account
+{
+	char name[30];
+	int age;
+	long accno;
+	long money;
+	int pin;
+	struct account *next;
+} *head = NULL;
+
+//declaration of various functions that will be used
+void create();
+void balance();
+void withdraw();
+void deposit();
+void update();
+void updaten(struct account *ptr);
+void updatea(struct account *ptr);
+void updatep(struct account *ptr);
+void Remove();
+void check();
+
+void main()
+{
+	int ch;
+	//for the program to take input multiple times till the user decides to exit
+	while (1)
+	{
+		//goto tag for invalid choice retry
+		retry:
+			//the main menu
+			printf("\t\t\t\t\tMain Menu\n\t\t\t1. Create Account\n\t\t\t2. Check Balance\n\t\t\t3. Withdraw Cash\n\t\t\t4. Deposit Cash\n\t\t\t5. Updating existing customer's details\n\t\t\t6. Remove Account\n\t\t\t7. Check existing customer details\n\t\t\t8. Exit\n");
+			printf("\n\t\t\tEnter your choice: ");
+			scanf("%d", &ch);
+			//to clear the screen for going to a different section
+			system("cls");
+			switch(ch)
+			{
+				case 1:
+					create();
+					break;
+				case 2:
+					balance();
+					break;
+				case 3:
+					withdraw();
+					break;
+				case 4:
+					deposit();
+					break;
+				case 5:
+					update();
+					break;
+				case 6:
+					Remove();
+					break;
+				case 7:
+					check();
+					break;
+				case 8:
+					exit(0);
+				default:
+					printf("\n\t\t\tInvalid choice, try again.\n\n");
+					goto retry;	
+			}
+			//so that the output stays on the screen for the user to observe
+			printf("\n\t\t\tPress any key to continue.");
+			getch();
+			system("cls");
+	}
+}
+
+void create()
+{
+	struct account *newnode;
+	newnode = (struct account *)malloc(sizeof(struct account));
+	printf("\t\t\tEnter details below:\n\n\t\t\tName: ");
+	scanf("%s", &newnode->name);
+	printf("\t\t\tAge: ");
+	scanf("%d", &newnode->age);
+	printf("\t\t\tAccount No. (9 digits): ");
+	scanf("%ld", &newnode->accno);
+	printf("\t\t\tDeposit amount: ");
+	scanf("%ld", &newnode->money);
+	printf("\t\t\tPIN (4 digit): ");
+	scanf("%d", &newnode->pin);
+	newnode->next = head;
+	head = newnode;
+	printf("\n\n\n\t\t\t\t\tAccount Created.\n\n");
+}
+
+void balance()
+{
+	//when the database is empty
+	if (head == NULL)
+	{
+		printf("\t\t\t Database empty, no pre-existing accounts.\n");
+	}
+	else
+	{
+		long acc;
+		printf("\t\t\tEnter account no.: ");
+		scanf("%ld", &acc);
+		struct account *ptr = head;
+		//checking wether the account exists
+		while(ptr != NULL)
+		{
+			if (ptr->accno == acc)
+			{
+				break;
+			}
+			ptr = ptr->next;	
+		}
+		if (ptr == NULL)
+		{
+			printf("\t\t\tAccount not found.\n");
+		}
+		else
+		{
+			int pin, i = 0;
+			again:
+				printf("\t\t\tEnter PIN: ");
+				scanf("%d", &pin);
+				//user authentication
+				if (pin == ptr->pin)
+				{
+					printf("\n\t\t\tAccount balance: %ld\n\n", ptr->money);
+				}
+				else	
+				{
+					while (i <= 3)
+					{
+						printf("\n\n\t\t\tIncorrect PIN, try again.\n\n");
+						goto again;
+						i++;
+					}
+					printf("\n\n\t\t\tToo many incorrect attempts, come back later.\n\n");
+				}
+		}
+	}
+}
+
+void withdraw()
+{
+	if (head == NULL)
+	{
+		printf("\t\t\t Database empty, no pre-existing accounts.\n");
+	}
+	else
+	{
+		long acc;
+		printf("\t\t\tEnter account no.: ");
+		scanf("%ld", &acc);
+		struct account *ptr = head;
+		while(ptr != NULL)
+		{
+			if (ptr->accno == acc)
+			{
+				break;
+			}
+			ptr = ptr->next;	
+		}
+		if (ptr == NULL)
+		{
+			printf("\t\t\tAccount not found.\n");
+		}
+		else
+		{
+			int pin, i = 0;
+			again:
+				printf("\t\t\tEnter PIN: ");
+				scanf("%d", &pin);
+				if (pin == ptr->pin)
+				{
+					long amount;
+					printf("\n\t\t\tEnter withdrawl amount: ");
+					scanf("%ld", &amount);
+					if (amount > ptr->money)
+					{
+						printf("\n\t\t\t\t\tInsufficient balance.\n\n");
+					}
+					else
+					{
+						ptr->money -= amount;
+						printf("\n\t\t\t\t\tWithdrawl successful.\n\n\t\t\tRemaining Balance: %ld\n\n", ptr->money);
+					}
+				}
+				else	
+				{
+					while (i <= 3)
+					{
+						printf("\n\n\t\t\tIncorrect PIN, try again.\n\n");
+						goto again;
+						i++;
+					}
+					printf("\n\n\t\t\tToo many incorrect attempts, come back later.\n\n");
+				}
+		}
+	}
+}
+
+void deposit()
+{
+	if (head == NULL)
+	{
+		printf("\t\t\t Database empty, no pre-existing accounts.\n");
+	}
+	else
+	{
+		long acc;
+		printf("\t\t\tEnter account no.: ");
+		scanf("%ld", &acc);
+		struct account *ptr = head;
+		while(ptr != NULL)
+		{
+			if (ptr->accno == acc)
+			{
+				break;
+			}
+			ptr = ptr->next;	
+		}
+		if (ptr == NULL)
+		{
+			printf("\t\t\tAccount not found.\n");
+		}
+		else
+		{
+			int pin, i = 0;
+			again:
+				printf("\t\t\tEnter PIN: ");
+				scanf("%d", &pin);
+				if (pin == ptr->pin)
+				{
+					long amount;
+					printf("\n\t\t\tEnter deposit amount: ");
+					scanf("%ld", &amount);
+					ptr->money += amount;
+					printf("\n\n\t\t\t\t\tDeposit successful.\n\n\t\t\tTotal Balance: %ld", ptr->money);
+				}
+				else	
+				{
+					while (i <= 3)
+					{
+						printf("\n\n\t\t\tIncorrect PIN, try again.\n\n");
+						goto again;
+						i++;
+					}
+					printf("\n\n\t\t\tToo many incorrect attempts, come back later.\n\n");
+				}
+		}
+	}
+}
+
+void update()
+{
+	if (head == NULL)
+	{
+		printf("\t\t\t Database empty, no pre-existing accounts.\n");
+	}
+	else
+	{
+		long acc;
+		printf("\t\t\tEnter account no.: ");
+		scanf("%ld", &acc);
+		struct account *ptr = head;
+		while(ptr != NULL)
+		{
+			if (ptr->accno == acc)
+			{
+				break;
+			}
+			ptr = ptr->next;	
+		}
+		if (ptr == NULL)
+		{
+			printf("\t\t\tAccount not found.\n");
+		}
+		else
+		{
+			int pin, i = 0;
+			again:
+				printf("\t\t\tEnter PIN: ");
+				scanf("%d", &pin);
+				if (pin == ptr->pin)
+				{
+					int ch;
+					retry:
+						system("cls");
+						printf("\n\n\t\t\t\t\tSelect detail to update\n\t\t\t1. Name\n\t\t\t2. PIN\n\t\t\tEnter your selection: ");
+						scanf("%d", &ch);
+						switch (ch)
+						{
+							case 1:
+								updaten(ptr);
+								break;
+							case 2:
+								updatep(ptr);
+								break;
+							default:
+								printf("\n\n\t\t\t\t\tInvalid choice, try again.\n\n");
+								goto retry;
+						}
+					
+					printf("\n\n\t\t\t\t\tUpdation successful.\n\n");
+				}
+				else	
+				{
+					while (i <= 3)
+					{
+						printf("\n\n\t\t\tIncorrect PIN, try again.\n\n");
+						goto again;
+						i++;
+					}
+					printf("\n\n\t\t\tToo many incorrect attempts, come back later.\n\n");
+				}
+		}
+	}	
+}
+
+//function used in the update function
+void updaten(struct account *ptr)
+{
+	int i;
+	char n[30];
+	printf("\n\t\t\tCurrent name: %s\n\n\t\t\tEnter new name to update: ", ptr->name);
+	scanf("%s", &n);
+	for (i = 0; i < 30; i++)
+	{
+		ptr->name[i] = n[i];
+	}
+}
+
+//function used in the update function
+void updatep(struct account *ptr)
+{
+	int p;
+	printf("\n\t\t\tCurrent PIN: %d\n\n\t\t\tEnter PIN to update: ", ptr->pin);
+	scanf("%d", &p);
+	ptr->pin = p;
+}
+
+void Remove()
+{
+	if (head == NULL)
+	{
+		printf("\t\t\t Database empty, no pre-existing accounts.\n");
+	}
+	else
+	{
+		long acc;
+		printf("\t\t\tEnter account no.: ");
+		scanf("%ld", &acc);
+		struct account *prev, *ptr = head;
+		while(ptr != NULL)
+		{
+			if (ptr->accno == acc)
+			{
+				break;
+			}
+			prev = ptr;
+			ptr = ptr->next;	
+		}
+		if (ptr == NULL)
+		{
+			printf("\t\t\tAccount not found.\n");
+		}
+		else
+		{
+			int pin, i = 0;
+			again:
+				printf("\t\t\tEnter PIN: ");
+				scanf("%d", &pin);
+				if (pin == ptr->pin)
+				{
+					//when theres only one account
+					if (head->next == NULL)
+					{
+						head = NULL;	
+					}
+					else
+					{
+						//to remove the latest account (the node that the head points to)
+						if (ptr == head)
+						{
+							head = ptr->next;
+						}
+						else
+						{
+							prev->next = ptr->next;	
+						}
+						ptr->next = NULL;	
+					}
+					free(ptr);
+					printf("\n\n\t\t\t\t\tAccount Removed.\n\n");
+				}
+				else	
+				{
+					while (i <= 3)
+					{
+						printf("\n\n\t\t\tIncorrect PIN, try again.\n\n");
+						goto again;
+						i++;
+					}
+					printf("\n\n\t\t\tToo many incorrect attempts, come back later.\n\n");
+				}
+		}
+	}
+}
+
+void check()
+{
+	if (head == NULL)
+	{
+		printf("\t\t\t Database empty, no pre-existing accounts.\n");
+	}
+	else
+	{
+		struct account *ptr = head;
+		printf("\t\t\tName\tAge\tAccount No.\tBalance\n");
+		while(ptr != NULL)
+		{
+			printf("\t\t\t%s\t%d\t%ld\t%ld\n", ptr->name, ptr->age, ptr->accno, ptr->money);
+			ptr = ptr->next;
+		}
+	}
+	printf("\n\n");
+}
